@@ -21,6 +21,8 @@ getNamesAndNodes(
   resume = TRUE
 )
 
+#gunzip files - make them readable
+
 read.nodes.sql("nodes.dmp", sqlFile = "namenode.sqlite", overwrite = FALSE)
 read.names.sql("names.dmp", sqlFile = "namenode.sqlite", overwrite = TRUE)
 
