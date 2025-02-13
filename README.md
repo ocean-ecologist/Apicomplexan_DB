@@ -1,7 +1,7 @@
 # Building a Custom Apicomplexan Database
 
 ### Project description
-For Seabird parasite screening
+This repository contains scripts, workflows, and datasets related to the molecular surveillance of Apicomplexa parasites in seabirds, specifically the endangered Cape cormorant, Cape gannet, and African Penguin populations. Our goal is to develop and optimize bioinformatics tools for detecting and characterizing these pathogens using molecular techniques.
 
 
 _________________________________________________________________________________________
@@ -36,7 +36,8 @@ grep -e ">" 18S_Apicomplexan.fasta > 18S_accIDs.txt
 ```
   
 Fix file by removing unwanted characters from accession IDs
-```sed 's/>//g' 18S_accIDs.txt > 18S_accIDs_fix1.txt
+```
+sed 's/>//g' 18S_accIDs.txt > 18S_accIDs_fix1.txt
 sed 's/\.1//g' 18S_accIDs_fix1.txt > 18S_accIDs_fix2.txt
 ```
  
