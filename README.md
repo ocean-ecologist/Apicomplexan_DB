@@ -2,6 +2,7 @@
 
 ### Project description
 This repository contains scripts, workflows, and datasets related to the molecular surveillance of Apicomplexa parasites in seabirds, specifically the endangered Cape cormorant, Cape gannet, and African Penguin populations. Our goal is to develop and optimize bioinformatics tools for detecting and characterizing these pathogens using molecular techniques.
+This database build is for the use with EMU, a relative abundance estimator for Nanopore reads.
 
 
 _________________________________________________________________________________________
