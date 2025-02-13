@@ -69,11 +69,17 @@ taxonomizr.R
 ### STEP 06 - Fix files
 
 Fix headers if needed:
-`sed 's/\.1//g' 18S_Apicomplexan.fasta > 18S_Apicomplexan_tmp.fasta
-sed 's/\.2//g' 18S_Apicomplexan_tmp.fasta > 18S_Apicomplexan_final.fasta`
 
-`sed 's/\.1//g' ApicomplexanDB_map.txt > ApicomplexanDB_map_tmp.txt
-sed 's/\.2//g' ApicomplexanDB_map_tmp.txt > ApicomplexanDB_map_final.txt`
+```
+sed 's/\.1//g' 18S_Apicomplexan.fasta > 18S_Apicomplexan_tmp.fasta
+sed 's/\.2//g' 18S_Apicomplexan_tmp.fasta > 18S_Apicomplexan_final.fasta
+```
+
+```
+sed 's/\.1//g' ApicomplexanDB_map.txt > ApicomplexanDB_map_tmp.txt
+sed 's/\.2//g' ApicomplexanDB_map_tmp.txt > ApicomplexanDB_map_final.txt
+```
+
 
 Fix all files to tsv (eg. ApicomplexanDB_map_final.txt > ApicomplexanDB_map_final.tsv), add taxaID to taxa_table.txt (produced in R)
 
