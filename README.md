@@ -10,8 +10,8 @@ ________________________________________________________________________________
 ## STEP 01-04: DOWNLOAD & PREPARE FILES 
 (Adapted from Lucas Huggins - https://figshare.unimelb.edu.au/articles/dataset/ApicomplexanDB/22153529?file=39387155)
 
-### STEP 01
-Download relevant sequences from NCBI (https://www.ncbi.nlm.nih.gov/nuccore/)
+### 01 Download relevant sequences from NCBI 
+https://www.ncbi.nlm.nih.gov/nuccore/
 
 All Apicomplexa:
   ```
@@ -24,8 +24,7 @@ The specific fasta sequences were chosen and downloaded as a fasta file from NCB
 Rename file: 18S_Apicomplexan.fasta
 
 
-### STEP 02
-Format/edit Fasta file & extract accession numbers
+### 02 Format/edit Fasta file & extract accession numbers
 ```
 awk '{print $1}' 18S_Apicomplexan_v1.fasta > 18S_Apicomplexan_v2.fasta  ## removes text in header after accession number
 ```
@@ -42,15 +41,12 @@ sed 's/\.1//g' 18S_accIDs_fix1.txt > 18S_accIDs_fix2.txt
 ```
  
 
-### STEP 03
-
-Download the large NCBI accession2taxid database - a text file:
+### 03 Download the large NCBI accession2taxid database - a text file:
 https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz
 
 
-### STEP 04
-
-Created a mapping table of each accession to its taxa id using nucl_gb.accession2taxid 
+### 04 Created a mapping file
+Creating a table of each accession to its taxa id using nucl_gb.accession2taxid 
 
 ```
 awk -F"\t" 'BEGIN{while(getline<"18S_accIDs_fix.txt") hash[$1]=1} {if ($2 in hash) print $2,$3}' nucl_gb.accession2taxid > ApicomplexanDB_map.txt
@@ -61,13 +57,11 @@ ________________________________________________________________________________
 		
 ## STEP 05-06: GET TAXONOMY & FIX FILES  
 
-### STEP 05 
+### 05 Get all taxonomy for taxa IDs - using R studio
 
-Get all taxonomy for taxa IDs - using R studio
+taxonomizr.R (https://github.com/ocean-ecologist/Apicomplexan_DB/blob/651e918c3af2da567dfb39de2360604ab1715f5f/taxonomizr.R)
 
-taxonomizr.R
-
-### STEP 06 - Fix files
+### 06 - Fix files
 
 Fix headers if needed:
 
@@ -89,35 +83,29 @@ ________________________________________________________________________________
 ## STEP 07-08: BUILD DATABASE & RUN IN EMU
 (Adapted from Kristen Curry, Treagen Lab - https://gitlab.com/treangenlab/emu/-/tree/master?ref_type=heads)
 
-### STEP 07 - Build Custom Database for EMU
+### 07 - Build Custom Database for EMU
 
 An emu database consists of 2 files:
-	1 - taxonomy.tsv (tab separated datasheet of database taxonomy lineages containing at columns: 'tax_id' and any taxonomic ranks (i.e. species, genus, etc))
-	2 - species_taxid.fasta (database sequences where each sequence header starts with the respective species-level tax id (or lowest level above species-level if missing) preceeding a colon [<species_taxid>:<remainder of header>])
+
+1. taxonomy.tsv (tab separated datasheet of database taxonomy lineages containing at columns: 'tax_id' and any taxonomic ranks (i.e. species, genus, etc))
+
+2. species_taxid.fasta (database sequences where each sequence header starts with the respective species-level tax id (or lowest level above species-level if missing) preceeding a colon [<species_taxid>:<remainder of header>])
+
+
 
 The following files are required to build a custom database:
 
-(1)
-Command: 		--sequences
-file(s):		database.fasta
-Description:	nucleotide sequences
+1. Nucleotide sequences in fasta format
 
-(2)
-Command: 		--seq2tax
-file(s):		seq2tax.map.tsv
-Description:	headerless two column tab-separated values, where each row contains (1) sequence header in database.fasta and (2) corresponding tax id
+2. Mapping file in .tsv format - a headerless two column tab-separated values, where each row contains (1) sequence header in database.fasta and (2) corresponding tax id
 
-(3)
-either taxonomy option:
-(3.1)
-Command: 		--ncbi-taxonomy
-file(s):		names.dmp & nodes.dmp
-Description:	directory containing both names.dmp and nodes.dmp files in NCBI taxonomy format and named accordingly
-OR
-(3.2)
-Command: 		--taxonomy-list
-file(s):		input taxonomy.tsv
-Description:	a .tsv file containing complete taxonomic lineages. The first column MUST be the taxonomy ids. Remaining columns can be in any format, then Emu abundance output will match this format
+3. Taxonomy file: 
+
+- Either a directory containing both names.dmp and nodes.dmp files in NCBI taxonomy format and named accordingly
+
+	OR
+
+- A .tsv file containing complete taxonomic lineages. The first column MUST be the taxonomy ids. Remaining columns can be in any format, then Emu abundance output will match this format
 
 USAGE:
 
@@ -129,7 +117,7 @@ OR
 emu build-database ApiDB --sequences /path-to/18S_Apicomplexan_final.fasta --seq2tax /path-to/ApicomplexanDB_map_final.tsv --ncbi-taxonomy /path-to/folder-with-names&nodes.dmp
 ```
 
-### STEP 08 - Run with EMU
+### 08 - Run with EMU
 
 ```
 for i in *
